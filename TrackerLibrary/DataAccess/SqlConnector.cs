@@ -90,36 +90,83 @@ namespace TrackerLibrary.DataAccess
             }
         }
 
+        public void CreateTournament(TournamentModel model)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                SaveTournament(connection, model);
+                SaveTournamentPrizes(connection, model);
+                SaveTournamentEntries(connection, model);
+
+            }
+        }
+        private void SaveTournament(IDbConnection connection, TournamentModel model)
+        {
+            var p = new DynamicParameters();
+            p.Add("@TournamentName", model.TournamentName);
+            p.Add("@EntryFee", model.TournamentName);
+            p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+            connection.Execute("dbo.spTournament_Insert", p, commandType: CommandType.StoredProcedure);
+
+            model.Id = p.Get<int>("@id");
+        }
+        private void SaveTournamentPrizes(IDbConnection connection, TournamentModel model)
+        {
+            foreach (PrizeModel pz in model.Prizes)
+            {
+               var  p = new DynamicParameters();
+                p.Add("@TournamentId", model.Id);
+                p.Add("@PrizeId", pz.Id);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.spTournamentPrizes_Insert", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+        private void SaveTournamentEntries(IDbConnection connection, TournamentModel model)
+        {
+            foreach (TeamModel tm in model.EnteredTeams)
+            {
+               var  p = new DynamicParameters();
+                p.Add("@TournamentId", model.Id);
+                p.Add("@TeamId", tm.Id);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.TournamentEntries_Insert", p, commandType: CommandType.StoredProcedure);
+            }
+
+        }
+
         public List<PersonModel> GetPerson_All()
-        {
-            List<PersonModel> output;
-
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
-                output = connection.Query<PersonModel>("dbo.spPeople_GetAll").ToList();
+                List<PersonModel> output;
 
-            }
-            return output;
-        }
-
-        public List<TeamModel> GetTeam_All()
-        {
-            List<TeamModel> output;
-
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
-            {
-                output = connection.Query<TeamModel>("dbo.spTeam_GetAll").ToList();
-
-                foreach (TeamModel team in output)
+                using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
                 {
-                    var p = new DynamicParameters();
-                    p.Add("@TeamId", team.Id);
+                    output = connection.Query<PersonModel>("dbo.spPeople_GetAll").ToList();
 
-                    team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMermbers_GetByTeam", p,  commandType: CommandType.StoredProcedure).ToList();
                 }
-
+                 return output;
             }
-            return output;
-        }
+
+            public List<TeamModel> GetTeam_All()
+            {
+                List<TeamModel> output;
+
+                using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+                {
+                    output = connection.Query<TeamModel>("dbo.spTeam_GetAll").ToList();
+
+                    foreach (TeamModel team in output)
+                    {
+                        var p = new DynamicParameters();
+                        p.Add("@TeamId", team.Id);
+
+                        team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMermbers_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
+                    }
+
+                }
+                 return output;
+            }
     }
 }
