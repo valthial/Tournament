@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 namespace TrackerLibrary.Models
 {
     /// <summary>
-    /// Represents one team in a matchup.
+    /// Represents one team in a matchup entry.
     /// </summary>
     public class MatchupEntryModel
     {
+        /// <summary>
+        /// The unique identifier for the matchup.
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Represents one team in the matchup.
         /// </summary>
