@@ -125,6 +125,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
 
                 foreach (string id in teamIds)
                 {
+                    //TODO - Error text load ??
                     tm.EnteredTeams.Add(teams.Where(x => x.Id == int.Parse(id)).First());
                 }
 

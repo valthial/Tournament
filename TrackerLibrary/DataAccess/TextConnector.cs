@@ -115,7 +115,15 @@ namespace TrackerLibrary.DataAccess
             
         }
 
-        
+        public List<TournamentModel> GetTournament_All()
+        {
+            return TournamentFile
+                .FullFilePath()
+                .LoadFile()
+                .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
+        }
+
+
         #endregion
     }
 }
