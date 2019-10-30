@@ -19,7 +19,6 @@ namespace TrackerLibrary.DataAccess
       
 
 
-        #region CREATE PersonModel
         public PersonModel CreatePerson(PersonModel model)
         {
             List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
@@ -38,9 +37,9 @@ namespace TrackerLibrary.DataAccess
 
             return model;
         }
-        #endregion
+ 
 
-        #region CREATE PrizeModel
+
         public PrizeModel CreatePrize(PrizeModel model)
         {
             //Load Text File and Convert the text to List<PrizeModel>          
@@ -123,7 +122,12 @@ namespace TrackerLibrary.DataAccess
                 .ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
         }
 
+        public void UpdateMatchup(MatchupModel model)
+        {
+            
+        }
 
-        #endregion
+
+
     }
 }

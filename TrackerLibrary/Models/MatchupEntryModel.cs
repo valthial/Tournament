@@ -17,7 +17,7 @@ namespace TrackerLibrary.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// The unique identifier gor the team.
+        /// The unique identifier for the team.
         /// </summary>
         public int TeamCompetingId { get; set; }
 
