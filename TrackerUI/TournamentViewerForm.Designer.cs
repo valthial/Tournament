@@ -136,7 +136,7 @@
             // 
             // teamTwoScoreValue
             // 
-            this.teamTwoScoreValue.Location = new System.Drawing.Point(581, 531);
+            this.teamTwoScoreValue.Location = new System.Drawing.Point(559, 531);
             this.teamTwoScoreValue.Name = "teamTwoScoreValue";
             this.teamTwoScoreValue.Size = new System.Drawing.Size(112, 36);
             this.teamTwoScoreValue.TabIndex = 11;
@@ -165,7 +165,7 @@
             // 
             // teamOneScoreValue
             // 
-            this.teamOneScoreValue.Location = new System.Drawing.Point(581, 328);
+            this.teamOneScoreValue.Location = new System.Drawing.Point(559, 328);
             this.teamOneScoreValue.Name = "teamOneScoreValue";
             this.teamOneScoreValue.Size = new System.Drawing.Size(112, 36);
             this.teamOneScoreValue.TabIndex = 8;
