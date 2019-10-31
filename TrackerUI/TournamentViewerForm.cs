@@ -23,11 +23,18 @@ namespace TrackerUI
 
             tournament = tournamentModel;
 
+            tournament.OnTournamentComplete += Tournament_OnTournamentComplete;
+
             WireUpLists();
 
             LoadFormData();
 
             LoadRounds();
+        }
+
+        private void Tournament_OnTournamentComplete(object sender, DateTime e)
+        {
+            this.Close();
         }
 
         private void LoadFormData()
@@ -207,7 +214,7 @@ namespace TrackerUI
                         }
                         else
                         {
-                            MessageBox.Show("Please entrer a valis score for team 1.");
+                            MessageBox.Show("Please enter a valid score for team 1.");
                             return;
                         }
                     }
@@ -223,7 +230,7 @@ namespace TrackerUI
                         }
                         else
                         {
-                            MessageBox.Show("Please entrer a valis score for team 2.");
+                            MessageBox.Show("Please enter a valid score for team 2.");
                             return;
                         }
                     }

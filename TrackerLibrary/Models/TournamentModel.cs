@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TrackerLibrary.Models
 {
@@ -11,6 +8,8 @@ namespace TrackerLibrary.Models
     /// </summary>
     public class TournamentModel
     {
+        public event EventHandler<DateTime> OnTournamentComplete;
+
         /// <summary>
         /// The unique identifier for the tournament.
         /// </summary>
@@ -40,5 +39,10 @@ namespace TrackerLibrary.Models
         /// The rounds that this tournament has.
         /// </summary>
         public List<List<MatchupModel>> Rounds { get; set; } = new List<List<MatchupModel>>();
+
+        public void CompleteTournament()
+        {
+            OnTournamentComplete?.Invoke(this, DateTime.Now);
+        }
     }
 }
